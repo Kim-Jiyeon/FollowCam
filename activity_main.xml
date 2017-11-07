@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:baselineAligned="false"-->
+    <!--android:orientation="vertical"-->
+    <!--tools:context="kr.hs.emirim.gjy00727.myapplication.MainActivity">-->
+
+    <!--<ImageView-->
+        <!--android:id="@+id/showpose"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/pose1"-->
+        <!--android:layout_gravity="center"/>-->
+
+    <!--<HorizontalScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--&gt;-->
+
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="horizontal"-->
+            <!--&gt;-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/imgview01"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@drawable/o_stuff_1"-->
+                <!--android:padding="10dp"-->
+                <!--/>-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/imgview02"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@drawable/o_stuff_1"-->
+                <!--android:padding="10dp"-->
+                <!--/>-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/imgview03"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@drawable/o_stuff_1"-->
+                <!--android:padding="10dp"-->
+                <!--/>-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/imgview04"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@drawable/o_stuff_1"-->
+                <!--android:padding="10dp"-->
+                <!--/>-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/imgview05"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@drawable/o_stuff_1"-->
+                <!--android:padding="10dp"-->
+                <!--/>-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/imgview06"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@drawable/o_stuff_1"-->
+                <!--android:padding="10dp"-->
+                <!--/>-->
+
+
+        <!--</LinearLayout>-->
+    <!--</HorizontalScrollView>-->
+<!--</LinearLayout>-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    tools:context="kr.hs.emirim.gjy00727.myapplication.MainActivity">
+
+    <ImageView
+        android:id="@+id/showpose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pose1"
+        android:layout_gravity="center"/>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:id="@+id/imgview01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/o_stuff_1"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imgview02"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/o_stuff_1"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imgview03"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/o_stuff_1"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imgview04"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/o_stuff_1"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imgview05"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/o_stuff_1"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imgview06"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/o_stuff_1"
+                android:padding="10dp"
+                />
+
+
+        </LinearLayout>
+    </HorizontalScrollView>
+</RelativeLayout>
