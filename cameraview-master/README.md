@@ -1,59 +1,16 @@
-# CameraView
+FollowCam
+-----------------
+팔로우캠은 사진을 찍어줄 사람이 필요한 사람, 사진 속에 추억을 담고 싶은 사람, 개성 있는 포즈로 사진을 찍고 싶은 사람들이 사진을 찍어주는 사람에게 **사진 또는 포즈를 촬영화면에 나타나게 하여 촬 영할 때 원하는 구도로 사진을 찍을 수 있도록 하는 카메라**입니다 
 
-*This is a preview release. The API is subject to change.*
+----------
 
-This is not an official Google product.
 
-CameraView aims to help Android developers easily integrate Camera features.
+Services
+-------------
+사진을 찍어주는 사람은 어떤 구도에서 찍어야 하는지 고민하지 않아도 되고 사진을 찍는 사람은 원하는 구도의 사진을 찍을 수 있어 둘 다 만족하는 카메라 앱.
 
-Requires API Level 9. The library uses Camera 1 API on API Level 9-20 and Camera2 on 21 and above.
+> **Note:**
 
-| API Level | Camera API | Preview View |
-|:---------:|------------|--------------|
-| 9-13      | Camera1    | SurfaceView  |
-| 14-20     | Camera1    | TextureView  |
-| 21-23     | Camera2    | TextureView  |
-| 24        | Camera2    | SurfaceView  |
-
-## Features
-
-- Camera preview by placing it in a layout XML (and calling the start method)
-- Configuration by attributes
-  - Aspect ratio (app:aspectRatio)
-  - Auto-focus (app:autoFocus)
-  - Flash (app:flash)
-
-## Usage
-
-```xml
-<com.google.android.cameraview.CameraView
-    android:id="@+id/camera"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:keepScreenOn="true"
-    android:adjustViewBounds="true"
-    app:autoFocus="true"
-    app:aspectRatio="4:3"
-    app:facing="back"
-    app:flash="auto"/>
-```
-
-```java
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mCameraView.start();
-    }
-
-    @Override
-    protected void onPause() {
-        mCameraView.stop();
-        super.onPause();
-    }
-```
-
-You can see a complete usage in the demo app.
-
-## Contribution
-
-See [CONTRIBUTING.md](/CONTRIBUTING.md).
+> - 앨범에서 사진을 선택하여 같은 구도로 찍을 수 있도록 해주어 같은 장소 같은 포즈로 사진을 찍 을 수 있게 됩니다. 
+> - 즐겨 찾는 포즈, 사용자가 직접 그린 포즈를 1인용 뿐만 아니라 많은 사람들과 찍을 수 있으며 자 유롭게 위치와 각도를 조정할 수 있어서 원하는 구도로 다양한 사진이 연출됩니다
+> - 사진을 찍어주는 사람이 사진을 찍는 사람이 지정한 사진 또는 포즈를 촬영화면에서 보면서 사진 을 찍어주는 사람이 사진 또는 포즈가 사진을 찍는 사람과 일치할 때 찍습니다
