@@ -14,9 +14,9 @@
 <manifest package="com.google.android.cameraview.demo"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -30,6 +30,15 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".DrawActivity"
+            android:theme="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Menu"></activity>
+        <activity android:name=".SelectPoseActivity"
+            android:theme="@android:style/Theme.Translucent">
+        </activity>
+        <activity android:name=".PreviewActivity"
+            android:configChanges="keyboardHidden|orientation">
+            <!--카메라 회전시에도 기존의 엑티비티를 제거하지 않도록 방지하기 위해-->
         </activity>
 
     </application>
