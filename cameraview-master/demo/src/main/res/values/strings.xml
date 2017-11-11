@@ -22,4 +22,5 @@
     <string name="flash_auto">Flash auto</string>
     <string name="flash_off">Flash off</string>
     <string name="flash_on">Flash on</string>
+    <string name="draw_line">Draw line</string>
 </resources>

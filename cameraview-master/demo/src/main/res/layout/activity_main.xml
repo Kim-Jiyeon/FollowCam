@@ -84,4 +84,100 @@
         android:layout_marginRight="19dp"
         android:layout_marginEnd="19dp"/>
 
+    <SeekBar
+        android:id="@+id/opacityBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/opacityText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="11dp"
+        android:background="@color/accent"
+        android:max="255"
+        android:progress="100"/>
+
+    <TextView
+        android:id="@+id/opacityText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/take_picture"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="TextView"/>
+
+
+    <HorizontalScrollView
+        android:id="@+id/scrollView_pose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/pose"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="bottom"
+        android:layout_margin="10dp"
+
+        android:background="#ffffff">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="40dp"
+            android:background="@color/colorPrimary"
+            >
+
+            <ImageView
+                android:id="@+id/imgview01"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@mipmap/ic_flash_off"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imgview02"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="20dp"
+                android:background="@mipmap/ic_flash_off"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imgview03"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="20dp"
+                android:background="@mipmap/ic_flash_off"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imgview04"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="20dp"
+                android:background="@mipmap/ic_flash_off"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imgview05"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="20dp"
+                android:background="@mipmap/ic_flash_off"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imgview06"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="20dp"
+                android:background="@mipmap/ic_flash_off"
+                android:padding="10dp"
+                />
+        </LinearLayout>
+    </HorizontalScrollView>
 </RelativeLayout>

@@ -17,4 +17,12 @@
     <color name="accent">#ffffff</color>
     <color name="primaryText">#212121</color>
     <color name="secondaryText">#727272</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="lightgreen">#9CCC65</color>
+    <color name="lavanda">#7E57C2</color>
+    <color name="pastel">#e53935</color>
+    <color name="lightorange">#FF5722</color>
+    <color name="lightpink">#D500F9</color>
+    <color name="black">#000000</color>
+    <color name="red">#cc1812</color>
 </resources>

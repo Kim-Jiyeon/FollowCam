@@ -21,6 +21,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -41,8 +43,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.cameraview.AspectRatio;
@@ -61,16 +68,23 @@ import java.util.Set;
  */
 public class MainActivity extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
-        AspectRatioFragment.Listener {
+        AspectRatioFragment.Listener,
+        View.OnTouchListener
+{
+
+    boolean check_pose = false;
 
     private static final int SELECT_PHOTO = 500;
     private ImageView chooseImage;
     private ImageView imageView;
 
+    private SeekBar barOpacity;
+    private TextView textOpacitySetting;
+
     private static final String TAG = "MainActivity";
 
     private static final int REQUEST_CAMERA_PERMISSION = 1;
-
+    private static final int REQUEST_CAMERA_CODE=100;
     private static final String FRAGMENT_DIALOG = "dialog";
 
     private static final int[] FLASH_OPTIONS = {
@@ -91,32 +105,46 @@ public class MainActivity extends AppCompatActivity implements
             R.string.flash_on,
     };
 
+
+
     private int mCurrentFlash;
 
     private CameraView mCameraView;
 
     private Handler mBackgroundHandler;
 
-    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.take_picture:
-                    if (mCameraView != null) {
-                        mCameraView.takePicture();
-                    }
-                    break;
-            }
-        }
-    };
+
+
+    ImageButton pose_btn;
+    HorizontalScrollView scrollView_pose;
+    ImageView imgV[]=new ImageView[6];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        scrollView_pose = (HorizontalScrollView)findViewById(R.id.scrollView_pose);
+        scrollView_pose.setVisibility(View.GONE);
+
         chooseImage=(ImageView) findViewById(R.id.chooseImage);
         imageView=(ImageView)findViewById(R.id.imageView);
+
+        barOpacity = (SeekBar)findViewById(R.id.opacityBar);
+        textOpacitySetting = (TextView)findViewById(R.id.opacityText);
+
+
+        imageView.setOnTouchListener(this);
+
+
+        pose_btn = (ImageButton)findViewById(R.id.pose);
+        pose_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                check_pose = true;
+                scrollView_pose.setVisibility(View.VISIBLE);
+            }
+        });
 
         mCameraView = (CameraView) findViewById(R.id.camera);
         if (mCameraView != null) {
@@ -133,7 +161,101 @@ public class MainActivity extends AppCompatActivity implements
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
         }
+
+        int alpha = barOpacity.getProgress();
+        textOpacitySetting.setText(String.valueOf(alpha));
+        imageView.setAlpha(alpha);
+        barOpacity.setOnSeekBarChangeListener(barOpacityOnSeekBarChangeListener);
+
+
+        imgV[0] = (ImageView) findViewById(R.id.imgview01);
+        imgV[1] = (ImageView) findViewById(R.id.imgview02);
+        imgV[2] = (ImageView) findViewById(R.id.imgview03);
+        imgV[3] = (ImageView) findViewById(R.id.imgview04);
+        imgV[4] = (ImageView) findViewById(R.id.imgview05);
+        imgV[5] = (ImageView) findViewById(R.id.imgview06);
+
+        for(int i = 0 ; i < 6; i++){
+            final int finalI = i;
+            imgV[i].setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onClick(View v) {
+                    imageView.setBackgroundDrawable(imgV[finalI].getDrawable());
+                }
+            });
+        }
     }
+
+    float oldXvalue;
+    float oldYvalue;
+
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+    public boolean onTouch(View v, MotionEvent event) {
+        //int width = ((ViewGroup) v.getParent()).getWidth() - v.getWidth();
+        //int height = ((ViewGroup) v.getParent()).getHeight() - v.getHeight();
+
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            oldXvalue = event.getX();
+            oldYvalue = event.getY();
+            //  Log.i("Tag1", "Action Down X" + event.getX() + "," + event.getY());
+            Log.i("Tag1", "Action Down rX " + event.getRawX() + "," + event.getRawY());
+        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            v.setX(event.getRawX() - oldXvalue);
+            v.setY(event.getRawY() - (oldYvalue + v.getHeight()/10));
+            //  Log.i("Tag2", "Action Down " + me.getRawX() + "," + me.getRawY());
+        }
+        return true;
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                if(check_pose){
+                    check_pose = false;
+                    scrollView_pose.setVisibility(View.GONE);
+                }
+        }
+        return super.onTouchEvent(event);
+    }
+
+
+    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.take_picture:
+                    if (mCameraView != null) {
+                        mCameraView.takePicture();
+                    }
+                    break;
+            }
+//            Intent intent = new Intent(MainActivity.this,PreviewActivity.class);
+//            startActivity(intent);
+        }
+    };
+
+    //SeekBar-Opacity
+    SeekBar.OnSeekBarChangeListener barOpacityOnSeekBarChangeListener =
+            new SeekBar.OnSeekBarChangeListener(){
+
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress,
+                        boolean fromUser) {
+                    int alpha = barOpacity.getProgress();
+                    textOpacitySetting.setText(String.valueOf(alpha));
+                    imageView.setAlpha(alpha);   //deprecated
+                    //image.setImageAlpha(alpha); //for API Level 16+
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {}
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {}
+
+            };
 
     //open image in gallery
     public void ChooseImage(View v){
@@ -146,6 +268,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     //take image
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
@@ -154,12 +277,11 @@ public class MainActivity extends AppCompatActivity implements
                     Uri selectedImage = data.getData();
                     if(selectedImage !=null){
                         imageView.setImageURI(selectedImage);
+                        imageView.setBackground(null);
                     }
                 }
         }
     }
-
-
 
     @Override
     protected void onResume() {
@@ -251,6 +373,11 @@ public class MainActivity extends AppCompatActivity implements
                             CameraView.FACING_BACK : CameraView.FACING_FRONT);
                 }
                 return true;
+
+            case R.id.pencil_draw:
+                Toast.makeText(MainActivity.this,"그림그리기",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this,DrawActivity.class);
+                startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -287,12 +414,19 @@ public class MainActivity extends AppCompatActivity implements
         @Override
         public void onPictureTaken(CameraView cameraView, final byte[] data) {
             Log.d(TAG, "onPictureTaken " + data.length);
-            Toast.makeText(cameraView.getContext(), R.string.picture_taken, Toast.LENGTH_SHORT)
-                    .show();
+            //Toast.makeText(cameraView.getContext(), R.string.picture_taken, Toast.LENGTH_SHORT).show();
             getBackgroundHandler().post(new Runnable() {
                 @Override
                 public void run() {
-                    File file = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "picture.jpg");
+                    mCameraView.buildDrawingCache();
+                    Bitmap bm = mCameraView.getDrawingCache();
+
+                    String root = Environment.getExternalStorageDirectory().toString();
+                    File myDir = new File(root + "/followcam_images");
+                    myDir.mkdirs();
+                    //Toast.makeText(MainActivity.this,myDir.getPath(),Toast.LENGTH_SHORT).show();
+                    String filename="picture"+System.currentTimeMillis()+".jpg";
+                    File file = new File(myDir, filename);
                     OutputStream os = null;
                     try {
                         os = new FileOutputStream(file);
@@ -308,7 +442,19 @@ public class MainActivity extends AppCompatActivity implements
                                 // Ignore
                             }
                         }
+                        //image scanning
+                        bm.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,Uri.parse("file://"+myDir.getPath()+"/"+filename)));
+                       // Intent intent = new Intent(MainActivity.this,PreviewActivity.class);
+                        String whole_filename="file://"+myDir.getPath()+"/"+filename;
+                        Intent intent = new Intent(getApplicationContext(), PreviewActivity.class);
+                        intent.putExtra("filename",whole_filename);
+                        startActivity(intent);
+
+                      //  Toast.makeText(MainActivity.this,"file://"+myDir.getPath()+"/"+filename,Toast.LENGTH_LONG).show();
+
                     }
+
                 }
             });
         }
