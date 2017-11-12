@@ -446,7 +446,8 @@ public class MainActivity extends AppCompatActivity implements
                         bm.compress(Bitmap.CompressFormat.JPEG, 100, os);
                         sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,Uri.parse("file://"+myDir.getPath()+"/"+filename)));
                        // Intent intent = new Intent(MainActivity.this,PreviewActivity.class);
-                        String whole_filename="file://"+myDir.getPath()+"/"+filename;
+
+                        String whole_filename=myDir.getPath()+"/"+filename;
                         Intent intent = new Intent(getApplicationContext(), PreviewActivity.class);
                         intent.putExtra("filename",whole_filename);
                         startActivity(intent);
