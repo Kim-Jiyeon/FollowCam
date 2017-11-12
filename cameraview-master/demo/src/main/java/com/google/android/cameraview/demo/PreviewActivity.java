@@ -16,6 +16,7 @@
 
 package com.google.android.cameraview.demo;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,9 +24,13 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.File;
 
 /**
  * Created by USER on 2017-11-09.
@@ -34,19 +39,23 @@ import android.widget.Toast;
 public class PreviewActivity extends AppCompatActivity {
 
     private ImageView previewImage;
-    private final int CAMERA_CODE=100;
     private String filename;
-    private Bitmap bm;
+    private ImageView saveImage;
+    private boolean flag_save=false;
+    private Uri uri;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview);
         previewImage = (ImageView) findViewById(R.id.preview_img);
+        saveImage=(ImageView)findViewById(R.id.save_img);
 
         Intent intent=getIntent();
         filename=intent.getExtras().getString("filename");
         if(filename.equals("")){Toast.makeText(this,"없넹",Toast.LENGTH_LONG).show();}
         Toast.makeText(this,filename,Toast.LENGTH_SHORT).show();
-        Uri uri = Uri.parse(filename);
+        uri = Uri.parse("file://"+filename);
 
         try
         {
@@ -69,8 +78,15 @@ public class PreviewActivity extends AppCompatActivity {
             Toast.makeText(this, "오류발생: " + e.getLocalizedMessage(),
                 Toast.LENGTH_LONG).show();
         }
-    }
 
+        saveImage.setOnClickListener(new ImageView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"save image",Toast.LENGTH_SHORT).show();
+                flag_save=true;
+            }
+        });
+    }
     public int exifOrientationToDegrees(int exifOrientation)
     {
         if(exifOrientation == ExifInterface.ORIENTATION_ROTATE_90){ return 90;}
@@ -93,11 +109,33 @@ public class PreviewActivity extends AppCompatActivity {
                 }
             }
             catch(OutOfMemoryError ex){
+
                 // 메모리가 부족하여 회전을 시키지 못할 경우 그냥 원본을 반환합니다.
             }
         }
         return bitmap;
     }
+    public void onBackPressed() {
+
+        if(flag_save==true){
+            Toast.makeText(getApplicationContext(),"save it!!",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"delete it!!",Toast.LENGTH_SHORT).show();
+            File file =new File(filename);
+            file.delete();
+
+            //파일삭제 후 갤러리 썸네일 남는 현상 해결
+            ContentResolver resolver = getContentResolver();
+            Uri resolver_uri  = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            String selection = MediaStore.Images.Media.DATA + " = ?";
+            String[] selectionArgs = {filename}; // 실제 파일의 경로
+            resolver.delete(resolver_uri, selection,selectionArgs);
+        }
+        super.onBackPressed();
+    }
+
+
 }
 
 
