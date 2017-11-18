@@ -30,15 +30,56 @@
         android:layout_marginTop="124dp"
         />
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/primary"
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="65dp"
+       >
 
-        android:layout_alignParentTop="true"/>
+
+       <ImageButton
+           android:id="@+id/switch_flash"
+           android:layout_marginTop="15dp"
+           android:layout_width="35dp"
+           android:layout_height="35dp"
+           android:layout_marginLeft="35dp"
+           android:scaleType="fitCenter"
+           android:background="@android:color/transparent"
+           app:srcCompat="@mipmap/flash_auto"/>
+
+       <ImageButton
+           android:id="@+id/switch_camera"
+           android:layout_marginTop="15dp"
+           android:layout_width="35dp"
+           android:layout_height="35dp"
+           android:layout_marginLeft="50dp"
+           android:layout_toRightOf="@+id/switch_flash"
+           android:scaleType="fitCenter"
+           android:background="@android:color/transparent"
+           app:srcCompat="@mipmap/switch_camera"/>
+
+       <ImageButton
+           android:id="@+id/aspect_ratio"
+           android:layout_marginTop="15dp"
+           android:layout_width="35dp"
+           android:layout_height="35dp"
+           android:layout_marginLeft="50dp"
+           android:layout_toRightOf="@+id/switch_camera"
+           android:scaleType="fitCenter"
+           android:background="@android:color/transparent"
+           app:srcCompat="@mipmap/aspect_ratio"/>
+
+       <ImageButton
+           android:id="@+id/pencil_draw"
+           android:layout_marginTop="15dp"
+           android:layout_width="35dp"
+           android:layout_height="35dp"
+           android:layout_marginLeft="50dp"
+           android:layout_toRightOf="@+id/aspect_ratio"
+           android:scaleType="fitCenter"
+           android:background="@android:color/transparent"
+           app:srcCompat="@mipmap/pencil"/>
+
+   </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/take_picture"
@@ -53,36 +94,33 @@
 
     <ImageButton
         android:id="@+id/pose"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical|left"
-        android:layout_marginLeft="23dp"
-        android:layout_marginStart="23dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_weight="1"
-        android:background="@mipmap/iconpose1"
-        android:padding="20dp"
-        android:scaleType="fitCenter"
-        android:layout_marginBottom="12dp"
+        android:layout_gravity="center_vertical|left"
+        android:layout_marginLeft="50dp"
+        android:layout_marginBottom="18dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:background="@mipmap/iconpose1"
+        android:scaleType="fitCenter"/>
 
     <ImageView
         android:id="@+id/chooseImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical|right"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
         android:layout_weight="1"
-        android:background="@mipmap/iconalbum1"
+        android:layout_gravity="center_vertical|right"
         android:elevation="0dp"
-        android:onClick="ChooseImage"
-        android:padding="20dp"
-        android:scaleType="fitCenter"
         android:layout_alignTop="@+id/pose"
+        android:layout_marginEnd="50dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="19dp"
-        android:layout_marginEnd="19dp"/>
+        android:background="@mipmap/iconalbum1"
+        android:onClick="ChooseImage"
+        android:scaleType="fitCenter"
+        android:layout_marginRight="30dp"/>
 
     <SeekBar
         android:id="@+id/opacityBar"
@@ -122,7 +160,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:padding="40dp"
+            android:padding="20dp"
             android:background="@color/colorPrimary"
             >
 
@@ -139,7 +177,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
-                android:background="@mipmap/ic_flash_off"
+                android:background="@mipmap/pose_02"
                 android:padding="10dp"
                 />
 
@@ -148,7 +186,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
-                android:background="@mipmap/ic_flash_off"
+                android:background="@mipmap/flash_off"
                 android:padding="10dp"
                 />
 
@@ -157,7 +195,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
-                android:background="@mipmap/ic_flash_off"
+                android:background="@mipmap/flash_off"
                 android:padding="10dp"
                 />
 
@@ -166,7 +204,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
-                android:background="@mipmap/ic_flash_off"
+                android:background="@mipmap/flash_off"
                 android:padding="10dp"
                 />
 
@@ -175,7 +213,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
-                android:background="@mipmap/ic_flash_off"
+                android:background="@mipmap/flash_off"
                 android:padding="10dp"
                 />
         </LinearLayout>

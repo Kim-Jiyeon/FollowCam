@@ -101,30 +101,6 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
         spinner.setOnItemSelectedListener(this);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-
-        switch (item.getItemId())
-        {
-            case R.id.menu_save: dr.saveImage();
-                Toast.makeText(this,"Image saved",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.menu_load: dr.loadImage();
-                break;
-            default:
-                Toast.makeText(this,"Error",Toast.LENGTH_LONG).show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.draw_menu,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
     @Override
     public void onClick(View view) {

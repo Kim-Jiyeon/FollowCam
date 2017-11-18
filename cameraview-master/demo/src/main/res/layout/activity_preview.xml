@@ -25,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
+
         <ImageView
             android:id="@+id/preview_img"
             android:layout_width="match_parent"
@@ -32,19 +33,29 @@
             android:padding="10dp"
             />
     </LinearLayout>
-    <LinearLayout
-        android:orientation="vertical"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="10">
+
+        <ImageView
+            android:id="@+id/delete_img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="25dp"
+            android:src="@mipmap/delete_btn"/>
+
         <ImageView
             android:id="@+id/save_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:src="@mipmap/save"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="280dp"
+            android:src="@mipmap/save_btn"
             />
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

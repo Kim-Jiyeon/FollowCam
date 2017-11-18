@@ -54,6 +54,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -103,9 +104,9 @@ public class MainActivity extends AppCompatActivity implements
     };
 
     private static final int[] FLASH_ICONS = {
-            R.mipmap.ic_flash_auto,
-            R.mipmap.ic_flash_off,
-            R.mipmap.ic_flash_on,
+            R.mipmap.flash_auto,
+            R.mipmap.flash_off,
+            R.mipmap.flash_on,
     };
 
     private static final int[] FLASH_TITLES = {
@@ -146,6 +147,8 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        customToolbar();
+
 
         // 포즈 선택 버튼 별 구현 ....
         imgV[0] = (ImageView) findViewById(R.id.imgview01);
@@ -159,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements
         imgV[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageView.setImageResource(R.drawable.ic_aspect_ratio);
+                imageView.setImageResource(R.mipmap.pose_02);
             }
         });
         imgV[2] = (ImageView) findViewById(R.id.imgview03);
@@ -202,8 +205,8 @@ public class MainActivity extends AppCompatActivity implements
 
 // 포즈 드래그, 줌, 회전
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(250, 250);
-        layoutParams.leftMargin = 150;
-        layoutParams.topMargin = 250;
+        layoutParams.leftMargin = 400;
+        layoutParams.topMargin = 450;
         layoutParams.bottomMargin = -250;
         layoutParams.rightMargin = -250;
         imageView.setLayoutParams(layoutParams);
@@ -351,11 +354,6 @@ public class MainActivity extends AppCompatActivity implements
 
 
     } // onCreate end
-
-
-
-
-
 
 
     //포즈 선택시 다른 여백 터치 -> 선택창 안보이게
@@ -526,16 +524,36 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+    public void customToolbar(){
+        final ImageView switch_flash = (ImageView)findViewById(R.id.switch_flash);
+        switch_flash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCameraView != null) {
+                    mCurrentFlash = (mCurrentFlash + 1) % FLASH_OPTIONS.length;
+                    switch_flash.setImageResource(FLASH_ICONS[mCurrentFlash]);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.aspect_ratio:
+                    mCameraView.setFlash(FLASH_OPTIONS[mCurrentFlash]);
+                }
+            }
+        });
+
+        final ImageView switch_camera = (ImageView)findViewById(R.id.switch_camera);
+        switch_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCameraView != null) {
+                    int facing = mCameraView.getFacing();
+                    mCameraView.setFacing(facing == CameraView.FACING_FRONT ?
+                            CameraView.FACING_BACK : CameraView.FACING_FRONT);
+                }
+            }
+        });
+
+        final ImageView aspect_ratio = (ImageView)findViewById(R.id.aspect_ratio);
+        aspect_ratio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 if (mCameraView != null
                         && fragmentManager.findFragmentByTag(FRAGMENT_DIALOG) == null) {
@@ -544,31 +562,20 @@ public class MainActivity extends AppCompatActivity implements
                     AspectRatioFragment.newInstance(ratios, currentRatio)
                             .show(fragmentManager, FRAGMENT_DIALOG);
                 }
-                return true;
-            case R.id.switch_flash:
-                if (mCameraView != null) {
-                    mCurrentFlash = (mCurrentFlash + 1) % FLASH_OPTIONS.length;
-                    item.setTitle(FLASH_TITLES[mCurrentFlash]);
-                    item.setIcon(FLASH_ICONS[mCurrentFlash]);
-                    mCameraView.setFlash(FLASH_OPTIONS[mCurrentFlash]);
-                }
-                return true;
-            case R.id.switch_camera:
-                if (mCameraView != null) {
-                    int facing = mCameraView.getFacing();
-                    mCameraView.setFacing(facing == CameraView.FACING_FRONT ?
-                            CameraView.FACING_BACK : CameraView.FACING_FRONT);
-                }
-                return true;
+            }
+        });
 
-            case R.id.pencil_draw:
+        final ImageView draw_line = (ImageView)findViewById(R.id.pencil_draw);
+        draw_line.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Toast.makeText(MainActivity.this,"그림그리기",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MainActivity.this,DrawActivity.class);
                 startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
+            }
+        });
 
+    }
     public void onAspectRatioSelected(@NonNull AspectRatio ratio) {
         if (mCameraView != null) {
             Toast.makeText(this, ratio.toString(), Toast.LENGTH_SHORT).show();

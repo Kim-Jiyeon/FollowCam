@@ -53,7 +53,7 @@
                 android:id="@+id/imgview01"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/ic_flash_off"
+                android:background="@mipmap/flash_off"
                 android:padding="10dp"
                 />
 
@@ -61,7 +61,7 @@
                 android:id="@+id/imgview02"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/ic_flash_off"
+                android:background="@mipmap/flash_off"
                 android:layout_marginLeft="20dp"
                 android:padding="10dp"
                 />
@@ -70,7 +70,7 @@
                 android:id="@+id/imgview03"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/ic_flash_off"
+                android:background="@mipmap/flash_off"
                 android:layout_marginLeft="20dp"
                 android:padding="10dp"
                 />
@@ -79,7 +79,7 @@
                 android:id="@+id/imgview04"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/ic_flash_off"
+                android:background="@mipmap/flash_off"
                 android:layout_marginLeft="20dp"
                 android:padding="10dp"
                 />
@@ -88,7 +88,7 @@
                 android:id="@+id/imgview05"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/ic_flash_off"
+                android:background="@mipmap/flash_off"
                 android:layout_marginLeft="20dp"
                 android:padding="10dp"
                 />
@@ -97,7 +97,7 @@
                 android:id="@+id/imgview06"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/ic_flash_off"
+                android:background="@mipmap/flash_off"
                 android:layout_marginLeft="20dp"
                 android:padding="10dp"
                 />

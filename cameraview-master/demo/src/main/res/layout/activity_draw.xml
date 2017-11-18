@@ -16,10 +16,10 @@
 
         <Button
             android:id="@+id/back_btn"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_margin="10dp"
-            android:background="@mipmap/back"/>
+            android:background="@mipmap/back_btn"/>
 
 
         <TextView
@@ -29,7 +29,7 @@
            android:text="그림판"
            android:layout_gravity="center"
            android:textSize="20dp"
-           android:layout_marginLeft="120dp"
+           android:layout_marginLeft="100dp"
            />
 
         <Button
@@ -39,27 +39,27 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="100dp"
             android:layout_toRightOf="@+id/text_t"
-            android:background="@mipmap/save"/>
+            android:background="@mipmap/save_btn"/>
 
     </LinearLayout>
 
     <View
         android:layout_margin="5dp"
         android:layout_width="500dp"
-        android:layout_height="3dp"
+        android:layout_height="2dp"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:background="#BBBBBB"  />
+        android:background="#4C87CF"  />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6"
+        android:layout_weight="9"
         android:paddingTop="4dp">
 
         <Button
             android:id="@+id/c_red"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="8dp"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@color/red"
@@ -67,7 +67,7 @@
 
         <Button
             android:id="@+id/c_orange"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@color/lightorange"
@@ -76,7 +76,7 @@
 
         <Button
             android:id="@+id/c_yellow"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@color/yellow"
@@ -94,7 +94,7 @@
 
         <Button
             android:id="@+id/c_blue"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@color/colorPrimary"
@@ -103,7 +103,7 @@
 
         <Button
             android:id="@+id/c_lavanda"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@color/lavanda"
@@ -112,7 +112,7 @@
 
         <Button
             android:id="@+id/c_pink"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@color/lightpink"
@@ -122,7 +122,7 @@
 
         <Button
             android:id="@+id/c_black"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@color/black"
@@ -131,13 +131,6 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_margin="5dp"
-        android:layout_width="500dp"
-        android:layout_height="3dp"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:background="#BBBBBB" />
 
     <Viewer.DrawLine
         android:id="@+id/drwLine"
@@ -146,16 +139,25 @@
         android:layout_weight="90"
         />
 
+    <View
+        android:layout_margin="3dp"
+        android:layout_width="500dp"
+        android:layout_height="2dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:background="#4C87CF"  />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:layout_weight="5">
+
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="348dp"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"/>
+            android:layout_width="340dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"/>
     </LinearLayout>
 
 
