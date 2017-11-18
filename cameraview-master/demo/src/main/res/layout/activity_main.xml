@@ -92,9 +92,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="11dp"
-        android:background="@color/accent"
         android:max="255"
-        android:progress="100"/>
+        android:progress="100"
+        android:progressTint="@color/colorPrimary"
+        android:thumbTint="@color/lavanda"/>
 
     <TextView
         android:id="@+id/opacityText"
@@ -115,7 +116,6 @@
         android:layout_alignParentStart="true"
         android:layout_gravity="bottom"
         android:layout_margin="10dp"
-
         android:background="#ffffff">
 
         <LinearLayout
@@ -130,7 +130,7 @@
                 android:id="@+id/imgview01"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:background="@mipmap/ic_flash_off"
+                android:background="@mipmap/pose_01"
                 android:padding="10dp"
                 />
 

@@ -21,25 +21,27 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/followcam1"
-        android:label="FollowCam"
+        android:label="팔로우캠"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Demo">
+        android:theme="@style/Theme.Demo"
+        android:hardwareAccelerated="true">
 
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".DrawActivity"
-            android:theme="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Menu"></activity>
-        <activity android:name=".SelectPoseActivity"
-            android:theme="@android:style/Theme.Translucent">
-        </activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".ViewPageActivity"></activity>
+
+        <activity android:name=".DrawActivity"></activity>
         <activity android:name=".PreviewActivity"
             android:configChanges="keyboardHidden|orientation">
             <!--카메라 회전시에도 기존의 엑티비티를 제거하지 않도록 방지하기 위해-->
         </activity>
+
 
     </application>
 

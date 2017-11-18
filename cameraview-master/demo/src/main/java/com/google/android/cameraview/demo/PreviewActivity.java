@@ -60,7 +60,7 @@ public class PreviewActivity extends AppCompatActivity {
         try
         {
             // 비트맵 이미지로 가져온다
-            String imagePath = uri.getPath();
+            String imagePath = uri.getPath();//uri 전체경로 file://까지
             Bitmap image = BitmapFactory.decodeFile(imagePath);
 
             // 이미지를 상황에 맞게 회전시킨다
@@ -87,7 +87,7 @@ public class PreviewActivity extends AppCompatActivity {
             }
         });
     }
-    public int exifOrientationToDegrees(int exifOrientation)
+    public static int exifOrientationToDegrees(int exifOrientation)
     {
         if(exifOrientation == ExifInterface.ORIENTATION_ROTATE_90){ return 90;}
         else if(exifOrientation == ExifInterface.ORIENTATION_ROTATE_180){return 180;}
@@ -95,7 +95,7 @@ public class PreviewActivity extends AppCompatActivity {
         return 0;
     }
 
-    public Bitmap rotate(Bitmap bitmap, int degrees)
+    public static Bitmap rotate(Bitmap bitmap, int degrees)
     {
         if(degrees != 0 && bitmap != null){
             Matrix m = new Matrix();
@@ -133,6 +133,25 @@ public class PreviewActivity extends AppCompatActivity {
             resolver.delete(resolver_uri, selection,selectionArgs);
         }
         super.onBackPressed();
+    }
+    protected void onUserLeaveHint()
+    {
+        if(flag_save==true){
+            Toast.makeText(getApplicationContext(),"save it!!",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"delete it!!",Toast.LENGTH_SHORT).show();
+            File file =new File(filename);
+            file.delete();
+
+            //파일삭제 후 갤러리 썸네일 남는 현상 해결
+            ContentResolver resolver = getContentResolver();
+            Uri resolver_uri  = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            String selection = MediaStore.Images.Media.DATA + " = ?";
+            String[] selectionArgs = {filename}; // 실제 파일의 경로
+            resolver.delete(resolver_uri, selection,selectionArgs);
+        }
+        super.onUserLeaveHint();
     }
 
 

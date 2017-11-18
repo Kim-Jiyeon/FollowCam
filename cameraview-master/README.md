@@ -1,35 +1,59 @@
-<<<<<<< HEAD
-FollowCam
-==================
-ÆÈ·Î¿ìÄ·Àº »çÁøÀ» Âï¾îÁÙ »ç¶÷ÀÌ ÇÊ¿äÇÑ »ç¶÷, »çÁø ¼Ó¿¡ Ãß¾ïÀ» ´ã°í ½ÍÀº »ç¶÷, °³¼º ÀÖ´Â Æ÷Áî·Î »çÁøÀ» Âï°í ½ÍÀº »ç¶÷µéÀÌ »çÁøÀ» Âï¾îÁÖ´Â »ç¶÷¿¡°Ô **»çÁø ¶Ç´Â Æ÷Áî¸¦ ÃÔ¿µÈ­¸é¿¡ ³ªÅ¸³ª°Ô ÇÏ¿© ÃÔ¿µÇÒ ¶§ ¿øÇÏ´Â ±¸µµ·Î »çÁøÀ» ÂïÀ» ¼ö ÀÖµµ·Ï ÇÏ´Â Ä«¸Ş¶ó**ÀÔ´Ï´Ù 
+# CameraView
 
+*This is a preview release. The API is subject to change.*
 
+This is not an official Google product.
 
+CameraView aims to help Android developers easily integrate Camera features.
 
-Services
--------------
-»çÁøÀ» Âï¾îÁÖ´Â »ç¶÷Àº ¾î¶² ±¸µµ¿¡¼­ Âï¾î¾ß ÇÏ´ÂÁö °í¹ÎÇÏÁö ¾Ê¾Æµµ µÇ°í »çÁøÀ» Âï´Â »ç¶÷Àº ¿øÇÏ´Â ±¸µµÀÇ »çÁøÀ» ÂïÀ» ¼ö ÀÖ¾î µÑ ´Ù ¸¸Á·ÇÏ´Â Ä«¸Ş¶ó ¾Û.
+Requires API Level 9. The library uses Camera 1 API on API Level 9-20 and Camera2 on 21 and above.
 
-> **Note:**
+| API Level | Camera API | Preview View |
+|:---------:|------------|--------------|
+| 9-13      | Camera1    | SurfaceView  |
+| 14-20     | Camera1    | TextureView  |
+| 21-23     | Camera2    | TextureView  |
+| 24        | Camera2    | SurfaceView  |
 
-> - ¾Ù¹ü¿¡¼­ »çÁøÀ» ¼±ÅÃÇÏ¿© °°Àº ±¸µµ·Î ÂïÀ» ¼ö ÀÖµµ·Ï ÇØÁÖ¾î °°Àº Àå¼Ò °°Àº Æ÷Áî·Î »çÁøÀ» Âï À» ¼ö ÀÖ°Ô µË´Ï´Ù. 
-> - Áñ°Ü Ã£´Â Æ÷Áî, »ç¿ëÀÚ°¡ Á÷Á¢ ±×¸° Æ÷Áî¸¦ 1ÀÎ¿ë »Ó¸¸ ¾Æ´Ï¶ó ¸¹Àº »ç¶÷µé°ú ÂïÀ» ¼ö ÀÖÀ¸¸ç ÀÚ À¯·Ó°Ô À§Ä¡¿Í °¢µµ¸¦ Á¶Á¤ÇÒ ¼ö ÀÖ¾î¼­ ¿øÇÏ´Â ±¸µµ·Î ´Ù¾çÇÑ »çÁøÀÌ ¿¬ÃâµË´Ï´Ù
-> - »çÁøÀ» Âï¾îÁÖ´Â »ç¶÷ÀÌ »çÁøÀ» Âï´Â »ç¶÷ÀÌ ÁöÁ¤ÇÑ »çÁø ¶Ç´Â Æ÷Áî¸¦ ÃÔ¿µÈ­¸é¿¡¼­ º¸¸é¼­ »çÁø À» Âï¾îÁÖ´Â »ç¶÷ÀÌ »çÁø ¶Ç´Â Æ÷Áî°¡ »çÁøÀ» Âï´Â »ç¶÷°ú ÀÏÄ¡ÇÒ ¶§ Âï½À´Ï´Ù
-=======
-FollowCam
-==================
-íŒ”ë¡œìš°ìº ì€ ì‚¬ì§„ì„ ì°ì–´ì¤„ ì‚¬ëŒì´ í•„ìš”í•œ ì‚¬ëŒ, ì‚¬ì§„ ì†ì— ì¶”ì–µì„ ë‹´ê³  ì‹¶ì€ ì‚¬ëŒ, ê°œì„± ìˆëŠ” í¬ì¦ˆë¡œ ì‚¬ì§„ì„ ì°ê³  ì‹¶ì€ ì‚¬ëŒë“¤ì´ ì‚¬ì§„ì„ ì°ì–´ì£¼ëŠ” ì‚¬ëŒì—ê²Œ **ì‚¬ì§„ ë˜ëŠ” í¬ì¦ˆë¥¼ ì´¬ì˜í™”ë©´ì— ë‚˜íƒ€ë‚˜ê²Œ í•˜ì—¬ ì´¬ì˜í•  ë•Œ ì›í•˜ëŠ” êµ¬ë„ë¡œ ì‚¬ì§„ì„ ì°ì„ ìˆ˜ ìˆë„ë¡ í•˜ëŠ” ì¹´ë©”ë¼**ì…ë‹ˆë‹¤ 
+## Features
 
+- Camera preview by placing it in a layout XML (and calling the start method)
+- Configuration by attributes
+  - Aspect ratio (app:aspectRatio)
+  - Auto-focus (app:autoFocus)
+  - Flash (app:flash)
 
+## Usage
 
+```xml
+<com.google.android.cameraview.CameraView
+    android:id="@+id/camera"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:keepScreenOn="true"
+    android:adjustViewBounds="true"
+    app:autoFocus="true"
+    app:aspectRatio="4:3"
+    app:facing="back"
+    app:flash="auto"/>
+```
 
-Services
--------------
-ì‚¬ì§„ì„ ì°ì–´ì£¼ëŠ” ì‚¬ëŒì€ ì–´ë–¤ êµ¬ë„ì—ì„œ ì°ì–´ì•¼ í•˜ëŠ”ì§€ ê³ ë¯¼í•˜ì§€ ì•Šì•„ë„ ë˜ê³  ì‚¬ì§„ì„ ì°ëŠ” ì‚¬ëŒì€ ì›í•˜ëŠ” êµ¬ë„ì˜ ì‚¬ì§„ì„ ì°ì„ ìˆ˜ ìˆì–´ ë‘˜ ë‹¤ ë§Œì¡±í•˜ëŠ” ì¹´ë©”ë¼ ì•±.
+```java
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mCameraView.start();
+    }
 
-> **Note:**
+    @Override
+    protected void onPause() {
+        mCameraView.stop();
+        super.onPause();
+    }
+```
 
-> - ì•¨ë²”ì—ì„œ ì‚¬ì§„ì„ ì„ íƒí•˜ì—¬ ê°™ì€ êµ¬ë„ë¡œ ì°ì„ ìˆ˜ ìˆë„ë¡ í•´ì£¼ì–´ ê°™ì€ ì¥ì†Œ ê°™ì€ í¬ì¦ˆë¡œ ì‚¬ì§„ì„ ì° ì„ ìˆ˜ ìˆê²Œ ë©ë‹ˆë‹¤. 
-> - ì¦ê²¨ ì°¾ëŠ” í¬ì¦ˆ, ì‚¬ìš©ìê°€ ì§ì ‘ ê·¸ë¦° í¬ì¦ˆë¥¼ 1ì¸ìš© ë¿ë§Œ ì•„ë‹ˆë¼ ë§ì€ ì‚¬ëŒë“¤ê³¼ ì°ì„ ìˆ˜ ìˆìœ¼ë©° ì ìœ ë¡­ê²Œ ìœ„ì¹˜ì™€ ê°ë„ë¥¼ ì¡°ì •í•  ìˆ˜ ìˆì–´ì„œ ì›í•˜ëŠ” êµ¬ë„ë¡œ ë‹¤ì–‘í•œ ì‚¬ì§„ì´ ì—°ì¶œë©ë‹ˆë‹¤
-> - ì‚¬ì§„ì„ ì°ì–´ì£¼ëŠ” ì‚¬ëŒì´ ì‚¬ì§„ì„ ì°ëŠ” ì‚¬ëŒì´ ì§€ì •í•œ ì‚¬ì§„ ë˜ëŠ” í¬ì¦ˆë¥¼ ì´¬ì˜í™”ë©´ì—ì„œ ë³´ë©´ì„œ ì‚¬ì§„ ì„ ì°ì–´ì£¼ëŠ” ì‚¬ëŒì´ ì‚¬ì§„ ë˜ëŠ” í¬ì¦ˆê°€ ì‚¬ì§„ì„ ì°ëŠ” ì‚¬ëŒê³¼ ì¼ì¹˜í•  ë•Œ ì°ìŠµë‹ˆë‹¤
->>>>>>> 244322dae6ec9f34900f8b8b65c3cc16eea98391
+You can see a complete usage in the demo app.
+
+## Contribution
+
+See [CONTRIBUTING.md](/CONTRIBUTING.md).

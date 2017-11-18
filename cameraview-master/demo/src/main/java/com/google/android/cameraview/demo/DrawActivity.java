@@ -30,13 +30,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import Interface.Viewer.DrawLine;
+import Viewer.DrawLine;
 
 
 public class DrawActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemSelectedListener
 {
     DrawLine dr;
-    Button c_green,c_blue, c_pastel, c_pink, c_lavanda, c_orange, c_black, c_red;
+    Button c_green,c_blue, c_yellow, c_pink, c_lavanda, c_orange, c_black, c_red;
     Spinner spinner;
 
     @Override
@@ -48,7 +48,7 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
 
         c_green = (Button) findViewById(R.id.c_green);
         c_blue = (Button) findViewById(R.id.c_blue);
-        c_pastel = (Button) findViewById(R.id.c_pastel);
+        c_yellow = (Button) findViewById(R.id.c_yellow);
         c_pink = (Button) findViewById(R.id.c_pink);
         c_lavanda = (Button) findViewById(R.id.c_lavanda);
         c_orange = (Button) findViewById(R.id.c_orange);
@@ -60,7 +60,7 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
 
         c_green.setOnClickListener(this);
         c_blue.setOnClickListener(this);
-        c_pastel.setOnClickListener(this);
+        c_yellow.setOnClickListener(this);
         c_pink.setOnClickListener(this);
         c_lavanda.setOnClickListener(this);
         c_orange.setOnClickListener(this);
@@ -69,23 +69,23 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-//
-//        Button save_btn = (Button)findViewById(R.id.save);
-//        save_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dr.saveImage();
-//                Toast.makeText(DrawActivity.this,"Image saved", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        Button back_btn = (Button)findViewById(R.id.back);
-//        back_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
+
+        Button save_btn = (Button)findViewById(R.id.save_btn);
+        save_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dr.saveImage();
+                Toast.makeText(DrawActivity.this,"Image saved", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button back_btn = (Button)findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         ArrayList<String> width = new ArrayList<>();
@@ -135,8 +135,8 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.c_blue:
                 dr.changeColor(Color.rgb(63, 81, 181));
                 break;
-            case R.id.c_pastel:
-                dr.changeColor(Color.rgb(229, 57, 53));
+            case R.id.c_yellow:
+                dr.changeColor(Color.rgb(255, 255, 0));
                 break;
             case R.id.c_pink:
                 dr.changeColor(Color.rgb(213, 0, 249));

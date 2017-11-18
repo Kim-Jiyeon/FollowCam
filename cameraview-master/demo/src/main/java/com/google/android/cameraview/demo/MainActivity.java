@@ -16,18 +16,26 @@
 
 package com.google.android.cameraview.demo;
 
+import static com.google.android.cameraview.demo.PreviewActivity.exifOrientationToDegrees;
+import static com.google.android.cameraview.demo.PreviewActivity.rotate;
+
 import android.Manifest;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
@@ -45,9 +53,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,8 +78,7 @@ import java.util.Set;
  */
 public class MainActivity extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback,
-        AspectRatioFragment.Listener,
-        View.OnTouchListener
+        AspectRatioFragment.Listener
 {
 
     boolean check_pose = false;
@@ -119,10 +128,68 @@ public class MainActivity extends AppCompatActivity implements
     HorizontalScrollView scrollView_pose;
     ImageView imgV[]=new ImageView[6];
 
+
+
+ // 드래그, 줌, 회전
+    float scalediff;
+    private static final int NONE = 0;
+    private static final int DRAG = 1;
+    private static final int ZOOM = 2;
+    private int mode = NONE;
+    private float oldDist = 1f;
+    private float d = 0f;
+    private float newRot = 0f;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // 포즈 선택 버튼 별 구현 ....
+        imgV[0] = (ImageView) findViewById(R.id.imgview01);
+        imgV[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.setImageResource(R.mipmap.pose_01);
+            }
+        });
+        imgV[1] = (ImageView) findViewById(R.id.imgview02);
+        imgV[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.setImageResource(R.drawable.ic_aspect_ratio);
+            }
+        });
+        imgV[2] = (ImageView) findViewById(R.id.imgview03);
+        imgV[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.setImageResource(R.drawable.ic_aspect_ratio);
+            }
+        });
+        imgV[3] = (ImageView) findViewById(R.id.imgview04);
+        imgV[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.setImageResource(R.drawable.ic_aspect_ratio);
+            }
+        });
+        imgV[4] = (ImageView) findViewById(R.id.imgview05);
+        imgV[4].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.setImageResource(R.drawable.ic_aspect_ratio);
+            }
+        });
+        imgV[5] = (ImageView) findViewById(R.id.imgview06);
+        imgV[5].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.setImageResource(R.drawable.ic_aspect_ratio);
+            }
+        });
 
         scrollView_pose = (HorizontalScrollView)findViewById(R.id.scrollView_pose);
         scrollView_pose.setVisibility(View.GONE);
@@ -133,9 +200,112 @@ public class MainActivity extends AppCompatActivity implements
         barOpacity = (SeekBar)findViewById(R.id.opacityBar);
         textOpacitySetting = (TextView)findViewById(R.id.opacityText);
 
+// 포즈 드래그, 줌, 회전
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(250, 250);
+        layoutParams.leftMargin = 150;
+        layoutParams.topMargin = 250;
+        layoutParams.bottomMargin = -250;
+        layoutParams.rightMargin = -250;
+        imageView.setLayoutParams(layoutParams);
 
-        imageView.setOnTouchListener(this);
+        imageView.setOnTouchListener(new View.OnTouchListener() {
 
+            RelativeLayout.LayoutParams parms;
+            int startwidth;
+            int startheight;
+            float dx = 0, dy = 0, x = 0, y = 0;
+            float angle = 0;
+
+            @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final ImageView view = (ImageView) v;
+
+//                ((BitmapDrawable)view.getDrawable()).setAntiAlias(true);
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_DOWN:
+
+                        parms = (RelativeLayout.LayoutParams) view.getLayoutParams();
+                        startwidth = parms.width;
+                        startheight = parms.height;
+                        dx = event.getRawX() - parms.leftMargin;
+                        dy = event.getRawY() - parms.topMargin;
+                        mode = DRAG;
+                        break;
+
+                    case MotionEvent.ACTION_POINTER_DOWN:
+                        oldDist = spacing(event);
+                        if (oldDist > 10f) {
+                            mode = ZOOM;
+                        }
+                        d = rotation(event);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        break;
+
+                    case MotionEvent.ACTION_POINTER_UP:
+                        mode = NONE;
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+                        if (mode == DRAG) {
+                            x = event.getRawX();
+                            y = event.getRawY();
+
+                            parms.leftMargin = (int) (x - dx);
+                            parms.topMargin = (int) (y - dy);
+
+                            parms.rightMargin = 0;
+                            parms.bottomMargin = 0;
+                            parms.rightMargin = parms.leftMargin + (5 * parms.width);
+                            parms.bottomMargin = parms.topMargin + (10 * parms.height);
+
+                            view.setLayoutParams(parms);
+
+                        } else if (mode == ZOOM) {
+                            if (event.getPointerCount() == 2) {
+                                newRot = rotation(event);
+                                float r = newRot - d;
+                                angle = r;
+
+                                x = event.getRawX();
+                                y = event.getRawY();
+
+                                float newDist = spacing(event);
+                                if (newDist > 10f) {
+                                    float scale = newDist / oldDist * view.getScaleX();
+                                    if (scale > 0.6) {
+                                        scalediff = scale;
+                                        view.setScaleX(scale);
+                                        view.setScaleY(scale);
+
+                                    }
+                                }
+
+                                view.animate().rotationBy(angle).setDuration(0).setInterpolator(new LinearInterpolator()).start();
+
+                                x = event.getRawX();
+                                y = event.getRawY();
+
+                                parms.leftMargin = (int) ((x - dx) + scalediff);
+                                parms.topMargin = (int) ((y - dy) + scalediff);
+
+                                parms.rightMargin = 0;
+                                parms.bottomMargin = 0;
+                                parms.rightMargin = parms.leftMargin + (5 * parms.width);
+                                parms.bottomMargin = parms.topMargin + (10 * parms.height);
+
+                                view.setLayoutParams(parms);
+
+
+                            }
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
 
         pose_btn = (ImageButton)findViewById(R.id.pose);
         pose_btn.setOnClickListener(new View.OnClickListener() {
@@ -150,10 +320,15 @@ public class MainActivity extends AppCompatActivity implements
         if (mCameraView != null) {
             mCameraView.addCallback(mCallback);
         }
+
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.take_picture);
         if (fab != null) {
             fab.setOnClickListener(mOnClickListener);
         }
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -162,52 +337,28 @@ public class MainActivity extends AppCompatActivity implements
             actionBar.setDisplayShowTitleEnabled(false);
         }
 
+
+        // 투명도
         int alpha = barOpacity.getProgress();
         textOpacitySetting.setText(String.valueOf(alpha));
         imageView.setAlpha(alpha);
         barOpacity.setOnSeekBarChangeListener(barOpacityOnSeekBarChangeListener);
 
 
-        imgV[0] = (ImageView) findViewById(R.id.imgview01);
-        imgV[1] = (ImageView) findViewById(R.id.imgview02);
-        imgV[2] = (ImageView) findViewById(R.id.imgview03);
-        imgV[3] = (ImageView) findViewById(R.id.imgview04);
-        imgV[4] = (ImageView) findViewById(R.id.imgview05);
-        imgV[5] = (ImageView) findViewById(R.id.imgview06);
 
-        for(int i = 0 ; i < 6; i++){
-            final int finalI = i;
-            imgV[i].setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                @Override
-                public void onClick(View v) {
-                    imageView.setBackgroundDrawable(imgV[finalI].getDrawable());
-                }
-            });
-        }
-    }
 
-    float oldXvalue;
-    float oldYvalue;
 
-    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
-    public boolean onTouch(View v, MotionEvent event) {
-        //int width = ((ViewGroup) v.getParent()).getWidth() - v.getWidth();
-        //int height = ((ViewGroup) v.getParent()).getHeight() - v.getHeight();
 
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            oldXvalue = event.getX();
-            oldYvalue = event.getY();
-            //  Log.i("Tag1", "Action Down X" + event.getX() + "," + event.getY());
-            Log.i("Tag1", "Action Down rX " + event.getRawX() + "," + event.getRawY());
-        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            v.setX(event.getRawX() - oldXvalue);
-            v.setY(event.getRawY() - (oldYvalue + v.getHeight()/10));
-            //  Log.i("Tag2", "Action Down " + me.getRawX() + "," + me.getRawY());
-        }
-        return true;
-    }
 
+    } // onCreate end
+
+
+
+
+
+
+
+    //포즈 선택시 다른 여백 터치 -> 선택창 안보이게
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         switch (action) {
@@ -231,8 +382,6 @@ public class MainActivity extends AppCompatActivity implements
                     }
                     break;
             }
-//            Intent intent = new Intent(MainActivity.this,PreviewActivity.class);
-//            startActivity(intent);
         }
     };
 
@@ -268,6 +417,22 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     //take image
+//    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        switch(requestCode) {
+//            case SELECT_PHOTO:
+//                if(resultCode == RESULT_OK){
+//                    Uri selectedImage = data.getData();
+//                    if(selectedImage !=null){
+//                        Toast.makeText(this,selectedImage.toString(),Toast.LENGTH_LONG).show();
+//                        imageView.setImageURI(selectedImage);
+//                        imageView.setBackground(null);
+//                    }
+//                }
+//        }
+//    }
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -276,12 +441,34 @@ public class MainActivity extends AppCompatActivity implements
                 if(resultCode == RESULT_OK){
                     Uri selectedImage = data.getData();
                     if(selectedImage !=null){
-                        imageView.setImageURI(selectedImage);
-                        imageView.setBackground(null);
+                        //갤러리에서 가져온 사진 회전 오류 해결
+                        Uri imgUri = data.getData();
+                        String imagePath = getRealPathFromURI(imgUri); // path 경로
+                        ExifInterface exif = null;
+                        try {
+                            exif = new ExifInterface(imagePath);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        int exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                        int exifDegree = exifOrientationToDegrees(exifOrientation);
+
+                        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);//경로를 통해 비트맵으로 전환
+                        imageView.setImageBitmap(rotate(bitmap, exifDegree));//이미지 뷰에 비트맵 넣기
+
                     }
                 }
         }
     }
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
 
     @Override
     protected void onResume() {
@@ -511,6 +698,22 @@ public class MainActivity extends AppCompatActivity implements
                     .create();
         }
 
+    }
+
+
+    // 포즈
+    private float spacing(MotionEvent event) {
+        float x = event.getX(0) - event.getX(1);
+        float y = event.getY(0) - event.getY(1);
+        return (float) Math.sqrt(x * x + y * y);
+    }
+
+    // 포즈 회전
+    private float rotation(MotionEvent event) {
+        double delta_x = (event.getX(0) - event.getX(1));
+        double delta_y = (event.getY(0) - event.getY(1));
+        double radians = Math.atan2(delta_y, delta_x);
+        return (float) Math.toDegrees(radians);
     }
 
 }
