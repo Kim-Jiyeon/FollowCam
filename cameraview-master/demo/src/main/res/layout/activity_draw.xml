@@ -1,164 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:id="@+id/activity_main"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:weightSum="100"
     >
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/back_btn"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_margin="10dp"
-            android:background="@mipmap/back_btn"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/text_t"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="그림판"
-           android:layout_gravity="center"
-           android:textSize="20dp"
-           android:layout_marginLeft="100dp"
-           />
 
-        <Button
-            android:id="@+id/save_btn"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="100dp"
-            android:layout_toRightOf="@+id/text_t"
-            android:background="@mipmap/save_btn"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/back_btn"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_margin="10dp"
+                android:background="@mipmap/back_btn"/>
+
+
+            <TextView
+                android:id="@+id/text_t"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="그림판"
+                android:layout_gravity="center"
+                android:textSize="20dp"
+                android:layout_marginLeft="100dp"
+                />
+
+            <Button
+                android:id="@+id/save_btn"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="100dp"
+                android:layout_toRightOf="@+id/text_t"
+                android:background="@mipmap/save_btn"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_margin="5dp"
+            android:layout_width="500dp"
+            android:layout_height="2dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:background="#4C87CF"  />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            android:paddingTop="4dp">
+
+            <Button
+                android:id="@+id/c_red"
+                android:layout_marginLeft="8dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/red"
+                />
+
+            <Button
+                android:id="@+id/c_orange"
+                android:layout_marginLeft="15dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/lightorange"
+                android:layout_toRightOf="@+id/c_red"
+                />
+
+            <Button
+                android:id="@+id/c_yellow"
+                android:layout_marginLeft="15dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/yellow"
+                android:layout_toRightOf="@+id/c_orange"
+                />
+
+            <Button
+                android:layout_marginLeft="15dp"
+                android:id="@+id/c_green"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/lightgreen"
+                android:layout_toRightOf="@+id/c_yellow"
+                />
+
+            <Button
+                android:id="@+id/c_blue"
+                android:layout_marginLeft="15dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/colorPrimary"
+                android:layout_toRightOf="@+id/c_green"
+                />
+
+            <Button
+                android:id="@+id/c_lavanda"
+                android:layout_marginLeft="15dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/lavanda"
+                android:layout_toRightOf="@+id/c_blue"
+                />
+
+            <Button
+                android:id="@+id/c_pink"
+                android:layout_marginLeft="15dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/lightpink"
+                android:layout_toRightOf="@+id/c_lavanda"
+                />
+
+
+            <Button
+                android:id="@+id/c_black"
+                android:layout_marginLeft="15dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/black"
+                android:layout_toRightOf="@+id/c_pink"
+                />
+
+        </RelativeLayout>
+
+        <Viewer.DrawLine
+            android:id="@+id/drwLine"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="90"
+            />
+
+        <View
+            android:layout_margin="3dp"
+            android:layout_width="500dp"
+            android:layout_height="2dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:background="#4C87CF"  />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="5">
+
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="340dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
-
-    <View
-        android:layout_margin="5dp"
-        android:layout_width="500dp"
-        android:layout_height="2dp"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:background="#4C87CF"  />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9"
-        android:paddingTop="4dp">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/c_red"
-            android:layout_marginLeft="8dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@color/red"
-            />
+        <View
+            android:id="@+id/hide_01"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80000000"
+            ></View>
 
-        <Button
-            android:id="@+id/c_orange"
-            android:layout_marginLeft="15dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@color/lightorange"
-            android:layout_toRightOf="@+id/c_red"
-            />
+        <ImageView
+            android:id="@+id/hide_02"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="-20dp"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/how_save_draw"/>
 
-        <Button
-            android:id="@+id/c_yellow"
-            android:layout_marginLeft="15dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@color/yellow"
-            android:layout_toRightOf="@+id/c_orange"
-            />
+        <ImageView
+            android:id="@+id/hide_03"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="33dp"
+            android:foregroundGravity="bottom"
+            android:visibility="gone"
+            android:src="@mipmap/how_color"/>
 
-        <Button
-            android:layout_marginLeft="15dp"
-            android:id="@+id/c_green"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@color/lightgreen"
-            android:layout_toRightOf="@+id/c_yellow"
-            />
-
-        <Button
-            android:id="@+id/c_blue"
-            android:layout_marginLeft="15dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@color/colorPrimary"
-            android:layout_toRightOf="@+id/c_green"
-            />
-
-        <Button
-            android:id="@+id/c_lavanda"
-            android:layout_marginLeft="15dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@color/lavanda"
-            android:layout_toRightOf="@+id/c_blue"
-            />
-
-        <Button
-            android:id="@+id/c_pink"
-            android:layout_marginLeft="15dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@color/lightpink"
-            android:layout_toRightOf="@+id/c_lavanda"
-            />
-
-
-        <Button
-            android:id="@+id/c_black"
-            android:layout_marginLeft="15dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@color/black"
-            android:layout_toRightOf="@+id/c_pink"
-            />
-
+        <ImageView
+            android:id="@+id/hide_04"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:src="@mipmap/how_thickness"/>
     </RelativeLayout>
 
 
-    <Viewer.DrawLine
-        android:id="@+id/drwLine"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="90"
-        />
-
-    <View
-        android:layout_margin="3dp"
-        android:layout_width="500dp"
-        android:layout_height="2dp"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:background="#4C87CF"  />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_weight="5">
 
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="340dp"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"/>
-    </LinearLayout>
+</RelativeLayout>
 
-
-</LinearLayout>

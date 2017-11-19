@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements
 
     ImageButton pose_btn;
     HorizontalScrollView scrollView_pose;
-    ImageView imgV[]=new ImageView[6];
+    ImageView imgV[]=new ImageView[10];
 
 
 
@@ -141,6 +141,11 @@ public class MainActivity extends AppCompatActivity implements
     private float d = 0f;
     private float newRot = 0f;
 
+
+    //튜토리얼
+    short execution;
+    View tutorialview;
+    ImageView tutorialImgview1, tutorialImgview2, tutorialImgview3, tutorialImgview4, tutorialImgview5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,28 +174,56 @@ public class MainActivity extends AppCompatActivity implements
         imgV[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageView.setImageResource(R.drawable.ic_aspect_ratio);
+                imageView.setImageResource(R.mipmap.pose_03);
             }
         });
         imgV[3] = (ImageView) findViewById(R.id.imgview04);
         imgV[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageView.setImageResource(R.drawable.ic_aspect_ratio);
+                imageView.setImageResource(R.mipmap.pose_04);
             }
         });
         imgV[4] = (ImageView) findViewById(R.id.imgview05);
         imgV[4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageView.setImageResource(R.drawable.ic_aspect_ratio);
+                imageView.setImageResource(R.mipmap.pose_05);
             }
         });
         imgV[5] = (ImageView) findViewById(R.id.imgview06);
         imgV[5].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageView.setImageResource(R.drawable.ic_aspect_ratio);
+                imageView.setImageResource(R.mipmap.pose_06);
+            }
+        });
+        imgV[6] = (ImageView) findViewById(R.id.imgview07);
+        imgV[6].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.setImageResource(R.mipmap.pose_07);
+            }
+        });
+        imgV[7] = (ImageView) findViewById(R.id.imgview08);
+        imgV[7].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.setImageResource(R.mipmap.pose_08);
+            }
+        });
+        imgV[8] = (ImageView) findViewById(R.id.imgview09);
+        imgV[8].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.setImageResource(R.mipmap.pose_09);
+            }
+        });
+        imgV[9] = (ImageView) findViewById(R.id.imgview10);
+        imgV[9].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.setImageResource(R.mipmap.pose_10);
             }
         });
 
@@ -204,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements
         textOpacitySetting = (TextView)findViewById(R.id.opacityText);
 
 // 포즈 드래그, 줌, 회전
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(250, 250);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(300, 300);
         layoutParams.leftMargin = 400;
         layoutParams.topMargin = 450;
         layoutParams.bottomMargin = -250;
@@ -350,6 +383,48 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
+
+
+        //튜토리얼 숨기기
+        execution = 0;
+        tutorialview = (View)findViewById(R.id.hide_01);
+        tutorialImgview1 = (ImageView)findViewById(R.id.hide_02);
+        tutorialImgview2 = (ImageView)findViewById(R.id.hide_03);
+        tutorialImgview3 = (ImageView)findViewById(R.id.hide_04);
+        tutorialImgview4 = (ImageView)findViewById(R.id.hide_05);
+        tutorialImgview5 = (ImageView)findViewById(R.id.hide_06);
+
+        tutorialview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (execution==0){
+                    tutorialImgview1.setVisibility(View.GONE);
+                    tutorialImgview2.setVisibility(View.VISIBLE);
+                    execution=1;
+                }
+                else if (execution==1){
+                    tutorialImgview2.setVisibility(View.GONE);
+                    tutorialImgview3.setVisibility(View.VISIBLE);
+                    execution=2;
+                }
+                else if (execution==2){
+                    tutorialImgview3.setVisibility(View.GONE);
+                    tutorialImgview4.setVisibility(View.VISIBLE);
+                    execution=3;
+                }
+                else if (execution==3){
+                    tutorialImgview4.setVisibility(View.GONE);
+                    tutorialImgview5.setVisibility(View.VISIBLE);
+                    execution=4;
+                }
+                else if (execution==4){
+                    tutorialview.setVisibility(View.GONE);
+                    tutorialImgview5.setVisibility(View.GONE);
+                    execution=5;
+                }
+                return false;
+            }
+        });
 
 
 

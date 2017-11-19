@@ -21,10 +21,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,12 +35,13 @@ import java.util.ArrayList;
 import Viewer.DrawLine;
 
 
-public class DrawActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemSelectedListener
-{
+public class DrawActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemSelectedListener{
     DrawLine dr;
     Button c_green,c_blue, c_yellow, c_pink, c_lavanda, c_orange, c_black, c_red;
     Spinner spinner;
-
+    short execution;
+    View tutorialview;
+    ImageView tutorialImgview1, tutorialImgview2, tutorialImgview3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +102,40 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+
+
+        //튜토리얼 숨기기
+        execution = 0;
+        tutorialview = (View)findViewById(R.id.hide_01);
+        tutorialImgview1 = (ImageView)findViewById(R.id.hide_02);
+        tutorialImgview2 = (ImageView)findViewById(R.id.hide_03);
+        tutorialImgview3 = (ImageView)findViewById(R.id.hide_04);
+
+        tutorialview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (execution==0){
+                    tutorialImgview1.setVisibility(View.GONE);
+                    tutorialImgview2.setVisibility(View.VISIBLE);
+                    execution=1;
+                }
+                else if (execution==1){
+                    tutorialImgview2.setVisibility(View.GONE);
+                    tutorialImgview3.setVisibility(View.VISIBLE);
+                    execution=2;
+                }
+                else if (execution==2){
+                    tutorialview.setVisibility(View.GONE);
+                    tutorialImgview3.setVisibility(View.GONE);
+                    execution=3;
+                }
+                return false;
+            }
+        });
+
+
+
+
     }
 
 
@@ -165,5 +202,6 @@ public class DrawActivity extends AppCompatActivity implements View.OnClickListe
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
 }
 

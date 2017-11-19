@@ -40,7 +40,7 @@ public class PreviewActivity extends AppCompatActivity {
 
     private ImageView previewImage;
     private String filename;
-    private ImageView saveImage;
+    private ImageView saveImage, deleteImage;
     private boolean flag_save=false;
     private Uri uri;
 
@@ -50,6 +50,9 @@ public class PreviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_preview);
         previewImage = (ImageView) findViewById(R.id.preview_img);
         saveImage=(ImageView)findViewById(R.id.save_img);
+        deleteImage=(ImageView)findViewById(R.id.delete_img);
+
+
 
         Intent intent=getIntent();
         filename=intent.getExtras().getString("filename");
@@ -84,6 +87,24 @@ public class PreviewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"save image",Toast.LENGTH_SHORT).show();
                 flag_save=true;
+            }
+        });
+
+        deleteImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"delete it!!",Toast.LENGTH_SHORT).show();
+                File file =new File(filename);
+                file.delete();
+
+                //파일삭제 후 갤러리 썸네일 남는 현상 해결
+                ContentResolver resolver = getContentResolver();
+                Uri resolver_uri  = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                String selection = MediaStore.Images.Media.DATA + " = ?";
+                String[] selectionArgs = {filename}; // 실제 파일의 경로
+                resolver.delete(resolver_uri, selection,selectionArgs);
+
+                finish();
             }
         });
     }

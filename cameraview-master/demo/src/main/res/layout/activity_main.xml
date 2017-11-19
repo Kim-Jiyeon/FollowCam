@@ -35,7 +35,6 @@
        android:layout_height="65dp"
        >
 
-
        <ImageButton
            android:id="@+id/switch_flash"
            android:layout_marginTop="15dp"
@@ -131,7 +130,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="11dp"
         android:max="255"
-        android:progress="100"
+        android:progress="255"
         android:progressTint="@color/colorPrimary"
         android:thumbTint="@color/lavanda"/>
 
@@ -154,7 +153,7 @@
         android:layout_alignParentStart="true"
         android:layout_gravity="bottom"
         android:layout_margin="10dp"
-        android:background="#ffffff">
+        android:background="@android:color/transparent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -162,6 +161,7 @@
             android:orientation="horizontal"
             android:padding="20dp"
             android:background="@color/colorPrimary"
+
             >
 
             <ImageView
@@ -186,7 +186,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
-                android:background="@mipmap/flash_off"
+                android:background="@mipmap/pose_03"
                 android:padding="10dp"
                 />
 
@@ -195,7 +195,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
-                android:background="@mipmap/flash_off"
+                android:background="@mipmap/pose_04"
                 android:padding="10dp"
                 />
 
@@ -204,7 +204,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
-                android:background="@mipmap/flash_off"
+                android:background="@mipmap/pose_05"
                 android:padding="10dp"
                 />
 
@@ -213,9 +213,120 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="20dp"
-                android:background="@mipmap/flash_off"
+                android:background="@mipmap/pose_06"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imgview07"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="20dp"
+                android:background="@mipmap/pose_07"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imgview08"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="20dp"
+                android:background="@mipmap/pose_08"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imgview09"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="20dp"
+                android:background="@mipmap/pose_09"
+                android:padding="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/imgview10"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="20dp"
+                android:background="@mipmap/pose_10"
                 android:padding="10dp"
                 />
         </LinearLayout>
     </HorizontalScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/hide_01"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80000000"
+            ></View>
+
+        <ImageView
+            android:id="@+id/hide_02"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="137dp"
+            android:layout_marginRight="137dp"
+            android:layout_marginTop="67dp"
+            android:src="@mipmap/how_darg"/>
+
+        <ImageView
+            android:id="@+id/hide_03"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="22dp"
+            android:layout_marginStart="22dp"
+            android:visibility="gone"
+            android:src="@mipmap/how_pose_select"/>
+
+        <ImageView
+            android:id="@+id/hide_04"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="276dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginRight="14dp"
+            android:foregroundGravity="bottom"
+            android:visibility="gone"
+            android:src="@mipmap/how_pose_draw"/>
+
+        <ImageView
+            android:id="@+id/hide_05"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="12dp"
+            android:layout_marginEnd="29dp"
+            android:layout_marginRight="29dp"
+            android:visibility="gone"
+            android:src="@mipmap/how_photo_select"/>
+
+        <ImageView
+            android:id="@+id/hide_06"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="98dp"
+            android:visibility="gone"
+            android:src="@mipmap/how_opacity"/>
+    </RelativeLayout>
+
+
 </RelativeLayout>
